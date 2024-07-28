@@ -1,8 +1,6 @@
 package com.food.ordering.model.entities;
 
-
 import jakarta.persistence.*;
-import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +20,7 @@ public class Food {
   private Long id;
 
   @ManyToOne
-  @Column(name = "food_category")
+  @JoinColumn(name = "food_category_id")
   private Category foodCategory;
 
   @ManyToOne
@@ -45,7 +43,6 @@ public class Food {
   @Column(length = 1000)
   @ElementCollection
   private List<String> images;
-
 
   @Column(name = "creation_date")
   private Date creationDate;

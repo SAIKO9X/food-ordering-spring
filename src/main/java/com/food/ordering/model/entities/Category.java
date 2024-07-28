@@ -22,5 +22,4 @@ public class Category {
   private Restaurant restaurant;
 
   private String name;
-
 }

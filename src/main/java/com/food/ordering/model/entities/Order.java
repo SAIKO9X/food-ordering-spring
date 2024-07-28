@@ -28,7 +28,7 @@ public class Order {
   private Restaurant restaurant;
 
   @ManyToOne
-  @Column(name = "delivery_address")
+  @JoinColumn(name = "delivery_address_id")
   private Address deliveryAddress;
 
   @OneToMany
