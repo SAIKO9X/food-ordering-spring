@@ -34,7 +34,9 @@ public class User {
   @ElementCollection
   private List<RestaurantDTO> favorites = new ArrayList<>();
 
+  @Column(name = "full_name")
   private String fullName;
+
   private String email;
   private String password;
 }
