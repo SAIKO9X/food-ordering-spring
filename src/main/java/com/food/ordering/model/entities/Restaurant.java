@@ -14,7 +14,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "tb_restaurant")
+@Table(name = "tb_restaurant")
+@Entity
 public class Restaurant {
 
   @Id
