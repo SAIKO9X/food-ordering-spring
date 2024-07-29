@@ -23,7 +23,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
   @Autowired
   private JWTProvider jwtProvider;
 
-
   @Value("${security.token.secret}")
   private String secretKey;
 
