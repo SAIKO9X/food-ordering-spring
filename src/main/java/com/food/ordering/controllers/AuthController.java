@@ -1,0 +1,30 @@
+package com.food.ordering.controllers;
+
+import com.food.ordering.model.entities.User;
+import com.food.ordering.model.response.AuthResponse;
+import com.food.ordering.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+
+  @Autowired
+  private UserService userService;
+
+  @PostMapping("/register")
+  public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) {
+    try {
+      AuthResponse authResponse = userService.registerUser(user);
+      return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
+    } catch (Exception e) {
+      return new ResponseEntity<>(new AuthResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+  }
+}
