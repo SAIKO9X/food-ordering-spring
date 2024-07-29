@@ -40,4 +40,10 @@ public class AdminController {
     MessageResponse message = new MessageResponse("restaurant deleted successfully");
     return new ResponseEntity<>(message, HttpStatus.OK);
   }
+
+  @PutMapping("/{id}/status")
+  public ResponseEntity<Restaurant> updateRestaurantStatus(@PathVariable Long id) throws Exception {
+    Restaurant restaurant = restaurantService.updateRestaurantStatus(id);
+    return new ResponseEntity<>(restaurant, HttpStatus.OK);
+  }
 }
