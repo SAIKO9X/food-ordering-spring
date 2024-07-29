@@ -27,4 +27,10 @@ public class AdminController {
     Restaurant restaurant = restaurantService.createRestaurant(request, user);
     return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
   }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Restaurant> updateRestaurant(@RequestBody CreateRestaurantRequest request, @PathVariable Long id) throws Exception {
+    Restaurant restaurant = restaurantService.updateRestaurant(id, request);
+    return new ResponseEntity<>(restaurant, HttpStatus.OK);
+  }
 }
