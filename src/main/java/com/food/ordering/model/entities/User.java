@@ -29,7 +29,7 @@ public class User {
   private List<Address> addresses = new ArrayList<>();
 
   @Enumerated
-  private USER_ROLE role;
+  private USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;
 
   @ElementCollection
   private List<RestaurantDTO> favorites = new ArrayList<>();
