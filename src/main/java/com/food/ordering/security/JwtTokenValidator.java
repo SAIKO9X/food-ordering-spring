@@ -13,11 +13,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
 
+@Component
 public class JwtTokenValidator extends OncePerRequestFilter {
 
   @Autowired
@@ -36,8 +38,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
       try {
         String email = String.valueOf(token.get("email"));
         String authorities = String.valueOf(token.get("authorities"));
-
-        // ROLE_CUSTOMER, ROLE_ADMIN
 
         List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, auth);

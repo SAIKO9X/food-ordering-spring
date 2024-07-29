@@ -25,12 +25,18 @@ public class JWTProvider {
   private long expirationTime;
 
   public Claims validateToken(String token) {
-    token = token.replace("Bearer ", "");
+    if (token.startsWith("Bearer ")) {
+      token = token.substring(7);
+    }
 
     SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
 
     try {
-      return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
+      return Jwts.parser()
+        .verifyWith(key)
+        .build()
+        .parseSignedClaims(token)
+        .getPayload();
     } catch (JwtException e) {
       return null;
     }
@@ -51,10 +57,9 @@ public class JWTProvider {
       .compact();
   }
 
-
   public String getEmailFromJwtToken(String header) {
-    var token = validateToken(header);
-    return String.valueOf(token.get("email"));
+    Claims token = validateToken(header);
+    return token != null ? String.valueOf(token.get("email")) : null;
   }
 
   private String populateAuthorities(Collection<? extends GrantedAuthority> authorities) {

@@ -1,6 +1,7 @@
 package com.food.ordering.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.food.ordering.model.dto.RestaurantDTO;
 import com.food.ordering.model.enums.USER_ROLE;
 import jakarta.persistence.*;
@@ -37,6 +38,8 @@ public class User {
   @Column(name = "full_name")
   private String fullName;
 
-  private String email;
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
+
+  private String email;
 }

@@ -10,7 +10,6 @@ import com.food.ordering.providers.JWTProvider;
 import com.food.ordering.repositories.CartRepository;
 import com.food.ordering.repositories.UserRepository;
 import com.food.ordering.services.AuthService;
-import com.food.ordering.services.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
