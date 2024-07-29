@@ -1,6 +1,8 @@
 package com.food.ordering.controllers;
 
+import com.food.ordering.exceptions.CustomBadCredentialsException;
 import com.food.ordering.model.entities.User;
+import com.food.ordering.model.request.LoginRequest;
 import com.food.ordering.model.response.AuthResponse;
 import com.food.ordering.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,16 @@ public class AuthController {
       return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(new AuthResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+    try {
+      AuthResponse authResponse = userService.authenticateUser(request);
+      return new ResponseEntity<>(authResponse, HttpStatus.OK);
+    } catch (CustomBadCredentialsException e) {
+      return new ResponseEntity<>(new AuthResponse(e.getMessage()), HttpStatus.UNAUTHORIZED);
     }
   }
 }

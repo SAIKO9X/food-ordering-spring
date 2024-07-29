@@ -1,10 +1,5 @@
 package com.food.ordering.model.request;
 
-import lombok.Data;
+public record LoginRequest(String email, String password) {
 
-@Data
-public class LoginRequest {
-
-  private String email;
-  private String password;
 }

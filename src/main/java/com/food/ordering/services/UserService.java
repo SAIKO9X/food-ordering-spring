@@ -1,7 +1,10 @@
 package com.food.ordering.services;
 
+import com.food.ordering.exceptions.CustomBadCredentialsException;
 import com.food.ordering.model.entities.Cart;
 import com.food.ordering.model.entities.User;
+import com.food.ordering.model.enums.USER_ROLE;
+import com.food.ordering.model.request.LoginRequest;
 import com.food.ordering.model.response.AuthResponse;
 import com.food.ordering.providers.JWTProvider;
 import com.food.ordering.repositories.CartRepository;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,9 @@ public class UserService {
 
   @Autowired
   private JWTProvider jwtProvider;
+
+  @Autowired
+  private CustomerUserDetailsService customerUserDetailsService;
 
   @Autowired
   private CartRepository cartRepository;
@@ -55,6 +62,30 @@ public class UserService {
     authResponse.setJwt(jwt);
     authResponse.setMessage("User Registered if success");
     authResponse.setRole(savedUser.getRole());
+
+    return authResponse;
+  }
+
+  public AuthResponse authenticateUser(LoginRequest request) {
+    String email = request.email();
+    String password = request.password();
+
+    UserDetails userDetails = customerUserDetailsService.loadUserByUsername(email);
+
+    if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
+      throw new CustomBadCredentialsException();
+    }
+
+    Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    String jwt = jwtProvider.generateToken(authentication);
+
+    String role = userDetails.getAuthorities().isEmpty() ? null : userDetails.getAuthorities().iterator().next().getAuthority();
+    USER_ROLE userRole = USER_ROLE.valueOf(role);
+
+    AuthResponse authResponse = new AuthResponse();
+    authResponse.setJwt(jwt);
+    authResponse.setMessage("Login Success");
+    authResponse.setRole(userRole);
 
     return authResponse;
   }
