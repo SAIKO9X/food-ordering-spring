@@ -33,4 +33,11 @@ public class AdminController {
     Restaurant restaurant = restaurantService.updateRestaurant(id, request);
     return new ResponseEntity<>(restaurant, HttpStatus.OK);
   }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<MessageResponse> deleteRestaurant(@PathVariable Long id) throws Exception {
+    restaurantService.deleteRestaurant(id);
+    MessageResponse message = new MessageResponse("restaurant deleted successfully");
+    return new ResponseEntity<>(message, HttpStatus.OK);
+  }
 }
