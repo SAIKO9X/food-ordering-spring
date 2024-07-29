@@ -4,7 +4,7 @@ import com.food.ordering.exceptions.CustomBadCredentialsException;
 import com.food.ordering.model.entities.User;
 import com.food.ordering.model.request.LoginRequest;
 import com.food.ordering.model.response.AuthResponse;
-import com.food.ordering.services.UserService;
+import com.food.ordering.services.implement.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
   @Autowired
-  private UserService userService;
+  private AuthServiceImpl authService;
 
   @PostMapping("/register")
   public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) {
     try {
-      AuthResponse authResponse = userService.registerUser(user);
+      AuthResponse authResponse = authService.registerUser(user);
       return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(new AuthResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
@@ -33,7 +33,7 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
     try {
-      AuthResponse authResponse = userService.authenticateUser(request);
+      AuthResponse authResponse = authService.authenticateUser(request);
       return new ResponseEntity<>(authResponse, HttpStatus.OK);
     } catch (CustomBadCredentialsException e) {
       return new ResponseEntity<>(new AuthResponse(e.getMessage()), HttpStatus.UNAUTHORIZED);

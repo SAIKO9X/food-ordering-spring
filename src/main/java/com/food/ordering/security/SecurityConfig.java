@@ -33,6 +33,7 @@ public class SecurityConfig {
           .requestMatchers("/api/**").authenticated()
           .anyRequest().permitAll();
       }).addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class);
+
     return http.build();
   }
 
