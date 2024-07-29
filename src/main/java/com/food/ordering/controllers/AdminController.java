@@ -46,4 +46,11 @@ public class AdminController {
     Restaurant restaurant = restaurantService.updateRestaurantStatus(id);
     return new ResponseEntity<>(restaurant, HttpStatus.OK);
   }
+
+  @GetMapping("/user")
+  public ResponseEntity<Restaurant> findRestaurantByUserId(@RequestHeader("Authorization") String jwt) throws Exception {
+    User user = userService.findUserByJwtToken(jwt);
+    Restaurant restaurant = restaurantService.findRestaurantByUserId(user.getId());
+    return new ResponseEntity<>(restaurant, HttpStatus.OK);
+  }
 }
