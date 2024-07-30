@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class Restaurant {
   @Column(length = 1000)
   private List<String> images;
 
-  @Column(name = "registration_date")
+  @CreationTimestamp
+  @Column(name = "registration_date", updatable = false)
   private LocalDateTime registrationDate;
 }
