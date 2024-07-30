@@ -2,8 +2,8 @@ package com.food.ordering.controllers;
 
 import com.food.ordering.model.entities.IngredientCategory;
 import com.food.ordering.model.entities.IngredientsItem;
-import com.food.ordering.model.request.IngredientCategoryRequest;
-import com.food.ordering.model.request.IngredientRequest;
+import com.food.ordering.request.IngredientCategoryRequest;
+import com.food.ordering.request.IngredientRequest;
 import com.food.ordering.services.IngredientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

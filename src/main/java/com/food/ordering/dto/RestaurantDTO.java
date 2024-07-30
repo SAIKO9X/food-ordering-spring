@@ -1,4 +1,4 @@
-package com.food.ordering.model.dto;
+package com.food.ordering.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

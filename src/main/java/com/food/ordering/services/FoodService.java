@@ -3,7 +3,7 @@ package com.food.ordering.services;
 import com.food.ordering.model.entities.Category;
 import com.food.ordering.model.entities.Food;
 import com.food.ordering.model.entities.Restaurant;
-import com.food.ordering.model.request.CreateFoodRequest;
+import com.food.ordering.request.CreateFoodRequest;
 
 import java.util.List;
 
