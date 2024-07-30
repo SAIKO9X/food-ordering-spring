@@ -2,18 +2,15 @@ package com.food.ordering.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.Data;
 
 import java.util.List;
 
 @Embeddable
-@Data
-public class RestaurantDTO {
+public record RestaurantDTO(
+  Long id,
+  String title,
+  String description,
+  @Column(length = 1000) List<String> images
+) {
 
-  Long id;
-  String title;
-  String description;
-
-  @Column(length = 1000)
-  List<String> images;
 }

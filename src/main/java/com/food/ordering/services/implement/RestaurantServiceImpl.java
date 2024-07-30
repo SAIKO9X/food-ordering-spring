@@ -4,10 +4,10 @@ import com.food.ordering.dto.RestaurantDTO;
 import com.food.ordering.model.entities.Address;
 import com.food.ordering.model.entities.Restaurant;
 import com.food.ordering.model.entities.User;
-import com.food.ordering.request.CreateRestaurantRequest;
 import com.food.ordering.repositories.AddressRepository;
 import com.food.ordering.repositories.RestaurantRepository;
 import com.food.ordering.repositories.UserRepository;
+import com.food.ordering.request.CreateRestaurantRequest;
 import com.food.ordering.services.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -127,24 +127,20 @@ public class RestaurantServiceImpl implements RestaurantService {
   public RestaurantDTO addToFavorites(Long restaurantId, User user) throws Exception {
     Restaurant restaurant = findRestaurantById(restaurantId);
 
-    RestaurantDTO restaurantDTO = new RestaurantDTO();
-    restaurantDTO.setDescription(restaurant.getDescription());
-    restaurantDTO.setTitle(restaurant.getName());
-    restaurantDTO.setImages(restaurant.getImages());
-    restaurantDTO.setId(restaurantId);
+    RestaurantDTO restaurantDTO = new RestaurantDTO(restaurantId, restaurant.getName(), restaurant.getDescription(), restaurant.getImages());
 
     boolean isFavorited = false;
     List<RestaurantDTO> favorites = user.getFavorites();
 
     for (RestaurantDTO favorite : favorites) {
-      if (favorite.getId().equals(restaurantId)) {
+      if (favorite.id().equals(restaurantId)) {
         isFavorited = true;
         break;
       }
     }
 
     if (isFavorited) {
-      favorites.removeIf(favorite -> favorite.getId().equals(restaurantId));
+      favorites.removeIf(favorite -> favorite.id().equals(restaurantId));
     } else {
       favorites.add(restaurantDTO);
     }
@@ -153,6 +149,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     return restaurantDTO;
   }
+
 
   @Override
   public Restaurant updateRestaurantStatus(Long id) throws Exception {
