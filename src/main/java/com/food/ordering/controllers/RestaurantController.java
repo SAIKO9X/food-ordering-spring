@@ -1,6 +1,6 @@
 package com.food.ordering.controllers;
 
-import com.food.ordering.model.dto.RestaurantDTO;
+import com.food.ordering.dto.RestaurantDTO;
 import com.food.ordering.model.entities.Restaurant;
 import com.food.ordering.model.entities.User;
 import com.food.ordering.services.RestaurantService;

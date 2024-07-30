@@ -2,7 +2,7 @@ package com.food.ordering.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.food.ordering.model.dto.RestaurantDTO;
+import com.food.ordering.dto.RestaurantDTO;
 import com.food.ordering.model.enums.USER_ROLE;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

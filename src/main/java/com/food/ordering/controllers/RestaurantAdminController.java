@@ -2,8 +2,8 @@ package com.food.ordering.controllers;
 
 import com.food.ordering.model.entities.Restaurant;
 import com.food.ordering.model.entities.User;
-import com.food.ordering.model.request.CreateRestaurantRequest;
-import com.food.ordering.model.response.MessageResponse;
+import com.food.ordering.request.CreateRestaurantRequest;
+import com.food.ordering.response.MessageResponse;
 import com.food.ordering.services.RestaurantService;
 import com.food.ordering.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

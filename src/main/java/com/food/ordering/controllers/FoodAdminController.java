@@ -2,8 +2,8 @@ package com.food.ordering.controllers;
 
 import com.food.ordering.model.entities.Food;
 import com.food.ordering.model.entities.Restaurant;
-import com.food.ordering.model.request.CreateFoodRequest;
-import com.food.ordering.model.response.MessageResponse;
+import com.food.ordering.request.CreateFoodRequest;
+import com.food.ordering.response.MessageResponse;
 import com.food.ordering.services.FoodService;
 import com.food.ordering.services.RestaurantService;
 import com.food.ordering.services.UserService;

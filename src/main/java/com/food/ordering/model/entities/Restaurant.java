@@ -1,7 +1,7 @@
 package com.food.ordering.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.food.ordering.model.dto.ContactInformation;
+import com.food.ordering.dto.ContactInformation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

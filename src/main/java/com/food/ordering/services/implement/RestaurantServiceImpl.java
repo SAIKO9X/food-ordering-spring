@@ -1,10 +1,10 @@
 package com.food.ordering.services.implement;
 
-import com.food.ordering.model.dto.RestaurantDTO;
+import com.food.ordering.dto.RestaurantDTO;
 import com.food.ordering.model.entities.Address;
 import com.food.ordering.model.entities.Restaurant;
 import com.food.ordering.model.entities.User;
-import com.food.ordering.model.request.CreateRestaurantRequest;
+import com.food.ordering.request.CreateRestaurantRequest;
 import com.food.ordering.repositories.AddressRepository;
 import com.food.ordering.repositories.RestaurantRepository;
 import com.food.ordering.repositories.UserRepository;

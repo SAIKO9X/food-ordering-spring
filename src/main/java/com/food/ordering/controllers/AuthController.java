@@ -2,8 +2,8 @@ package com.food.ordering.controllers;
 
 import com.food.ordering.exceptions.CustomBadCredentialsException;
 import com.food.ordering.model.entities.User;
-import com.food.ordering.model.request.LoginRequest;
-import com.food.ordering.model.response.AuthResponse;
+import com.food.ordering.request.LoginRequest;
+import com.food.ordering.response.AuthResponse;
 import com.food.ordering.services.implement.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

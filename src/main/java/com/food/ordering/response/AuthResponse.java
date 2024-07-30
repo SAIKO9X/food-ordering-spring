@@ -1,4 +1,4 @@
-package com.food.ordering.model.response;
+package com.food.ordering.response;
 
 import com.food.ordering.model.enums.USER_ROLE;
 import lombok.AllArgsConstructor;

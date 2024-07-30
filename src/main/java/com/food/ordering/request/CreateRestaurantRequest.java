@@ -1,6 +1,6 @@
-package com.food.ordering.model.request;
+package com.food.ordering.request;
 
-import com.food.ordering.model.dto.ContactInformation;
+import com.food.ordering.dto.ContactInformation;
 import com.food.ordering.model.entities.Address;
 
 import java.util.List;

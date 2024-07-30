@@ -1,4 +1,4 @@
-package com.food.ordering.model.request;
+package com.food.ordering.request;
 
 import com.food.ordering.model.entities.Category;
 import com.food.ordering.model.entities.IngredientsItem;
