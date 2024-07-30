@@ -1,6 +1,7 @@
 package com.food.ordering.model.request;
 
 import com.food.ordering.model.entities.Category;
+import com.food.ordering.model.entities.IngredientsItem;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public record CreateFoodRequest(
   Long restaurantId,
   boolean isVegetarian,
   boolean isSeasonal,
-  boolean available
+  boolean available,
+  List<IngredientsItem> ingredients
 ) {
 }
