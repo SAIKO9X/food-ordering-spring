@@ -1,4 +1,4 @@
 package com.food.ordering.model.request;
 
-public record IngredientRequest(String name, Long categoryId, Long restaurantId) {
+public record IngredientRequest(Long restaurantId, String name, Long categoryId) {
 }
