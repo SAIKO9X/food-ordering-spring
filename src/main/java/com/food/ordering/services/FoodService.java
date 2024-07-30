@@ -13,17 +13,11 @@ public interface FoodService {
 
   void deleteFood(Long foodId) throws Exception;
 
-  List<Food> getRestaurantsFood(
-    Long restaurantId,
-    boolean isVegetarian,
-    boolean noVegetarian,
-    boolean isSeasonal,
-    String foodCategory
-  );
+  public List<Food> getRestaurantsFood(Long restaurantId, boolean isVegetarian, boolean noVegetarian, boolean isSeasonal, String foodCategory);
 
   public List<Food> searchFood(String keyword);
 
-  public Food findFoodById(Long foodId) throws Exception;
+  public Food findFoodById(Long id) throws Exception;
 
   public Food updateAvailableStatus(Long foodId) throws Exception;
 }
