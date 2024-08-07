@@ -21,7 +21,7 @@ public class OrderAdminController {
   private UserService userService;
 
   @GetMapping("/order/restaurant/{id}")
-  public ResponseEntity<List<Order>> getOrderHistory(@PathVariable Long id, @RequestParam(required = false) String order_status) throws Exception {
+  public ResponseEntity<List<Order>> getRestaurantsOrder(@PathVariable Long id, @RequestParam(required = false) String order_status) throws Exception {
     List<Order> orders = orderService.getRestaurantsOrder(id, order_status);
 
     return new ResponseEntity<>(orders, HttpStatus.OK);

@@ -87,4 +87,26 @@ public class IngredientsServiceImpl implements IngredientsService {
 
     return itemRepository.save(ingredientsItem);
   }
+
+  @Override
+  public void deleteIngredient(Long id) throws Exception {
+    Optional<IngredientsItem> item = itemRepository.findById(id);
+
+    if (item.isEmpty()) {
+      throw new Exception("Ingredient not found");
+    }
+
+    itemRepository.delete(item.get());
+  }
+
+  @Override
+  public void deleteIngredientCategory(Long id) throws Exception {
+    Optional<IngredientCategory> category = categoryRepository.findById(id);
+
+    if (category.isEmpty()) {
+      throw new Exception("Ingredient category not found");
+    }
+
+    categoryRepository.delete(category.get());
+  }
 }

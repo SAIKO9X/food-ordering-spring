@@ -36,6 +36,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     restaurant.setName(request.name());
     restaurant.setDescription(request.description());
     restaurant.setCuisineType(request.cuisineType());
+    restaurant.setOpen(request.open());
     restaurant.setAddress(address);
     restaurant.setContact(request.contact());
     restaurant.setOpeningHours(request.openingHours());
@@ -149,7 +150,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     return restaurantDTO;
   }
-
 
   @Override
   public Restaurant updateRestaurantStatus(Long id) throws Exception {

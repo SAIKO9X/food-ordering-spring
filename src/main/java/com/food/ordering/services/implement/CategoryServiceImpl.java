@@ -21,8 +21,12 @@ public class CategoryServiceImpl implements CategoryService {
   private CategoryRepository categoryRepository;
 
   @Override
-  public Category createCategory(String name, Long userId) throws Exception {
-    Restaurant restaurant = restaurantService.findRestaurantByUserId(userId);
+  public Category createCategory(String name, Long restaurantId) throws Exception {
+    Restaurant restaurant = restaurantService.findRestaurantById(restaurantId);
+
+    if (restaurant == null) {
+      throw new Exception("Restaurant not found");
+    }
 
     Category category = new Category();
     category.setName(name);
@@ -32,8 +36,11 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public List<Category> findCategoryByRestaurantId(Long id) throws Exception {
-    Restaurant restaurant = restaurantService.findRestaurantByUserId(id);
+  public List<Category> findCategoryByRestaurantId(Long restaurantId) throws Exception {
+    Restaurant restaurant = restaurantService.findRestaurantById(restaurantId);
+    if (restaurant == null) {
+      throw new Exception("Restaurant not found");
+    }
     return categoryRepository.findByRestaurantId(restaurant.getId());
   }
 
@@ -42,9 +49,20 @@ public class CategoryServiceImpl implements CategoryService {
     Optional<Category> category = categoryRepository.findById(id);
 
     if (category.isEmpty()) {
-      throw new Exception("category not found");
+      throw new Exception("Category not found");
     }
 
     return category.get();
+  }
+
+  @Override
+  public void deleteCategory(Long id) throws Exception {
+    Optional<Category> category = categoryRepository.findById(id);
+
+    if (category.isEmpty()) {
+      throw new Exception("Category not found");
+    }
+
+    categoryRepository.delete(category.get());
   }
 }

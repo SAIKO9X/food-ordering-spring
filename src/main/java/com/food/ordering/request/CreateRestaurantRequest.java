@@ -9,6 +9,7 @@ public record CreateRestaurantRequest(
   Long id,
   String name,
   String description,
+  boolean open,
   String cuisineType,
   Address address,
   ContactInformation contact,

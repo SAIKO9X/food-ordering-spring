@@ -1,5 +1,6 @@
 package com.food.ordering.controllers;
 
+import com.food.ordering.dto.FoodDTO;
 import com.food.ordering.model.entities.Food;
 import com.food.ordering.model.entities.Restaurant;
 import com.food.ordering.request.CreateFoodRequest;
@@ -26,11 +27,11 @@ public class FoodAdminController {
   private RestaurantService restaurantService;
 
   @PostMapping
-  public ResponseEntity<Food> createFood(@RequestBody CreateFoodRequest request) throws Exception {
+  public ResponseEntity<FoodDTO> createFood(@RequestBody CreateFoodRequest request) throws Exception {
     Restaurant restaurant = restaurantService.findRestaurantById(request.restaurantId());
     Food food = foodService.createFood(request, request.category(), restaurant);
-
-    return new ResponseEntity<>(food, HttpStatus.CREATED);
+    FoodDTO foodDTO = foodService.convertToDTO(food);
+    return new ResponseEntity<>(foodDTO, HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
@@ -41,8 +42,9 @@ public class FoodAdminController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Food> updateFoodAvailabilityStatus(@PathVariable Long id) throws Exception {
+  public ResponseEntity<FoodDTO> updateFoodAvailabilityStatus(@PathVariable Long id) throws Exception {
     Food food = foodService.updateAvailableStatus(id);
-    return new ResponseEntity<>(food, HttpStatus.OK);
+    FoodDTO foodDTO = foodService.convertToDTO(food);
+    return new ResponseEntity<>(foodDTO, HttpStatus.OK);
   }
 }

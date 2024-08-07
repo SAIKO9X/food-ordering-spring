@@ -12,8 +12,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_food")
 @Entity
+@Table(name = "tb_food")
 public class Food {
 
   @Id
@@ -25,9 +25,14 @@ public class Food {
   private Category foodCategory;
 
   @ManyToOne
+  @JoinColumn(name = "restaurant_id")
   private Restaurant restaurant;
 
   @ManyToMany
+  @JoinTable(
+    name = "food_ingredients",
+    joinColumns = @JoinColumn(name = "food_id"),
+    inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
   private List<IngredientsItem> ingredients = new ArrayList<>();
 
   private String name;
@@ -41,10 +46,12 @@ public class Food {
   @Column(name = "is_seasonal")
   private boolean isSeasonal;
 
-  @Column(length = 1000)
   @ElementCollection
-  private List<String> images;
+  @CollectionTable(name = "food_images", joinColumns = @JoinColumn(name = "food_id"))
+  @Column(name = "image_url", length = 1000)
+  private List<String> images = new ArrayList<>();
 
   @Column(name = "creation_date")
+  @Temporal(TemporalType.TIMESTAMP)
   private Date creationDate;
 }

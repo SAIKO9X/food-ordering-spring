@@ -1,22 +1,26 @@
 package com.food.ordering.services.implement;
 
+import com.food.ordering.dto.FoodDTO;
 import com.food.ordering.model.entities.Category;
 import com.food.ordering.model.entities.Food;
 import com.food.ordering.model.entities.Restaurant;
-import com.food.ordering.request.CreateFoodRequest;
 import com.food.ordering.repositories.FoodRepository;
+import com.food.ordering.request.CreateFoodRequest;
+import com.food.ordering.response.RestaurantResponse;
+import com.food.ordering.response.UserResponse;
 import com.food.ordering.services.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class FoodServiceImpl implements FoodService {
 
   @Autowired
   private FoodRepository foodRepository;
-
 
   @Override
   public Food createFood(CreateFoodRequest request, Category category, Restaurant restaurant) {
@@ -67,7 +71,6 @@ public class FoodServiceImpl implements FoodService {
     return foods;
   }
 
-
   @Override
   public List<Food> searchFood(String keyword) {
     return foodRepository.searchFood(keyword);
@@ -91,6 +94,27 @@ public class FoodServiceImpl implements FoodService {
     return foodRepository.save(food);
   }
 
+  @Override
+  public FoodDTO convertToDTO(Food food) {
+    RestaurantResponse restaurantDTO = new RestaurantResponse(food.getRestaurant().getId(), food.getRestaurant().getName());
+    UserResponse userDTO = new UserResponse(food.getRestaurant().getOwner().getId(), food.getRestaurant().getOwner().getFullName());
+
+    return new FoodDTO(
+      food.getId(),
+      food.getFoodCategory(),
+      restaurantDTO,
+      userDTO,
+      food.getIngredients(),
+      food.getName(),
+      food.getDescription(),
+      food.getPrice(),
+      food.isAvailable(),
+      food.getImages(),
+      food.isSeasonal(),
+      food.isVegetarian()
+    );
+  }
+
   private List<Food> filterByVegetarian(List<Food> foods) {
     return foods.stream().filter(Food::isVegetarian).collect(Collectors.toList());
   }
@@ -104,7 +128,6 @@ public class FoodServiceImpl implements FoodService {
       if (food.getFoodCategory() != null) {
         return food.getFoodCategory().getName().equals(foodCategory);
       }
-
       return false;
     }).collect(Collectors.toList());
   }

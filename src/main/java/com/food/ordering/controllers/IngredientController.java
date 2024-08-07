@@ -48,4 +48,16 @@ public class IngredientController {
     List<IngredientCategory> items = ingredientsService.findIngredientCategoryByRestaurantId(id);
     return new ResponseEntity<>(items, HttpStatus.OK);
   }
+
+  @DeleteMapping("/item/{id}")
+  public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) throws Exception {
+    ingredientsService.deleteIngredient(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
+
+  @DeleteMapping("/category/{id}")
+  public ResponseEntity<Void> deleteIngredientCategory(@PathVariable Long id) throws Exception {
+    ingredientsService.deleteIngredientCategory(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 }
