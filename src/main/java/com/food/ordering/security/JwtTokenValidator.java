@@ -1,13 +1,15 @@
 package com.food.ordering.security;
 
 import com.food.ordering.providers.JWTProvider;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,17 +35,22 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     String header = request.getHeader("Authorization");
 
     if (header != null) {
-      var token = this.jwtProvider.validateToken(header);
-
       try {
+        var token = this.jwtProvider.validateToken(header);
         String email = String.valueOf(token.get("email"));
         String authorities = String.valueOf(token.get("authorities"));
 
         List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, auth);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-      } catch (Exception e) {
-        throw new BadCredentialsException("invalid token");
+      } catch (ExpiredJwtException e) {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write("Token expired");
+        return;
+      } catch (JwtException e) {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write("Invalid token");
+        return;
       }
     }
 

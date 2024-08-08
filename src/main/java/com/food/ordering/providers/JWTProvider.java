@@ -1,6 +1,7 @@
 package com.food.ordering.providers;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -38,9 +39,13 @@ public class JWTProvider {
         .parseSignedClaims(token)
         .getPayload();
     } catch (JwtException e) {
-      return null;
+      if (e instanceof ExpiredJwtException) {
+        throw new JwtException("Token expired");
+      }
+      throw new JwtException("Invalid token");
     }
   }
+
 
   public String generateToken(Authentication auth) {
     Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();

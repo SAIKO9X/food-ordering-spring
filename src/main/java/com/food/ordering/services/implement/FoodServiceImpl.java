@@ -30,6 +30,7 @@ public class FoodServiceImpl implements FoodService {
     food.setDescription(request.description());
     food.setImages(request.images());
     food.setName(request.name());
+    food.setAvailable(request.available());
     food.setPrice(request.price());
     food.setIngredients(request.ingredients());
     food.setSeasonal(request.isSeasonal());
@@ -54,9 +55,7 @@ public class FoodServiceImpl implements FoodService {
 
     if (isVegetarian) {
       foods = filterByVegetarian(foods);
-    }
-
-    if (noVegetarian) {
+    } else if (noVegetarian) {
       foods = filterByNoVegetarian(foods);
     }
 
@@ -64,7 +63,7 @@ public class FoodServiceImpl implements FoodService {
       foods = filterByIsSeasonal(foods);
     }
 
-    if (foodCategory != null && !foodCategory.isEmpty()) {
+    if (foodCategory != null && !foodCategory.equalsIgnoreCase("all") && !foodCategory.isEmpty()) {
       foods = filterByCategory(foods, foodCategory);
     }
 

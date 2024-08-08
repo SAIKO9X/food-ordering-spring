@@ -34,8 +34,14 @@ public class FoodController {
   }
 
   @GetMapping("/restaurant/{restaurantId}")
-  public ResponseEntity<List<FoodDTO>> getRestaurantFood(@RequestParam boolean vegetarian, @RequestParam boolean seasonal, @RequestParam boolean noVegetarian, @RequestParam(required = false) String food_category, @PathVariable Long restaurantId) throws Exception {
-    List<Food> foods = foodService.getRestaurantsFood(restaurantId, vegetarian, seasonal, noVegetarian, food_category);
+  public ResponseEntity<List<FoodDTO>> getRestaurantFood(
+    @PathVariable Long restaurantId,
+    @RequestParam(required = false) String food_category,
+    @RequestParam(required = false, defaultValue = "false") boolean vegetarian,
+    @RequestParam(required = false, defaultValue = "false") boolean noVegetarian,
+    @RequestParam(required = false, defaultValue = "false") boolean seasonal
+  ) throws Exception {
+    List<Food> foods = foodService.getRestaurantsFood(restaurantId, vegetarian, noVegetarian, seasonal, food_category);
     List<FoodDTO> foodDTOs = foods.stream().map(foodService::convertToDTO).collect(Collectors.toList());
     return new ResponseEntity<>(foodDTOs, HttpStatus.OK);
   }
