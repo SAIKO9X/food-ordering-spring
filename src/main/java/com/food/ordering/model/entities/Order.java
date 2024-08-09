@@ -34,8 +34,6 @@ public class Order {
   @OneToMany
   private List<OrderItem> items;
 
-  // private Payment payment;
-
   @Column(name = "total_amount")
   private double totalAmount;
 

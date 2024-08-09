@@ -40,7 +40,10 @@ public class CartServiceImpl implements CartService {
     for (CartItem cartItem : cart.getItems()) {
       if (cartItem.getFood().equals(food)) {
         int newQuantity = cartItem.getQuantity() + request.quantity();
-        return updateCartItemQuantity(cartItem.getId(), newQuantity);
+        CartItem updatedItem = updateCartItemQuantity(cartItem.getId(), newQuantity);
+        cart.setTotal(calculateCartTotals(cart));
+        cartRepository.save(cart);
+        return updatedItem;
       }
     }
 
@@ -51,12 +54,15 @@ public class CartServiceImpl implements CartService {
     newCartItem.setIngredient(request.ingredients());
     newCartItem.setTotalPrice(request.quantity() * food.getPrice());
 
-    CartItem savedCart = cartItemRepository.save(newCartItem);
+    CartItem savedCartItem = cartItemRepository.save(newCartItem);
 
-    cart.getItems().add(savedCart);
+    cart.getItems().add(savedCartItem);
+    cart.setTotal(calculateCartTotals(cart));
+    cartRepository.save(cart);
 
-    return savedCart;
+    return savedCartItem;
   }
+
 
   @Override
   public CartItem updateCartItemQuantity(Long cartItemId, int quantity) throws Exception {
@@ -68,11 +74,17 @@ public class CartServiceImpl implements CartService {
 
     CartItem item = cartItem.get();
     item.setQuantity(quantity);
-
     item.setTotalPrice(item.getFood().getPrice() * quantity);
 
-    return cartItemRepository.save(item);
+    CartItem updatedItem = cartItemRepository.save(item);
+
+    Cart cart = item.getCart();
+    cart.setTotal(calculateCartTotals(cart)); 
+    cartRepository.save(cart);
+
+    return updatedItem;
   }
+
 
   @Override
   public Cart removeItemFromCart(Long cartItemId, String jwt) throws Exception {
@@ -86,11 +98,11 @@ public class CartServiceImpl implements CartService {
     }
 
     CartItem item = cartItem.get();
-
     cart.getItems().remove(item);
-
+    cart.setTotal(calculateCartTotals(cart));
     return cartRepository.save(cart);
   }
+
 
   @Override
   public double calculateCartTotals(Cart cart) throws Exception {
