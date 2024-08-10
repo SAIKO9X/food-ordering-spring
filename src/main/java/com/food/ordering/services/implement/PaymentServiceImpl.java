@@ -34,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
       )
       .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
       .setMode(SessionCreateParams.Mode.PAYMENT)
-      .setSuccessUrl("http://localhost:5173/payment/success" + order.getId())
+      .setSuccessUrl("http://localhost:5173/payment/success/" + order.getId())
       .setCancelUrl("http://localhost:5173/payment/failure")
       .build();
 
