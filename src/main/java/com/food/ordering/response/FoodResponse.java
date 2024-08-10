@@ -1,4 +1,11 @@
 package com.food.ordering.response;
 
-public record FoodResponse(Long id, String name) {
+import java.util.List;
+
+public record FoodResponse(
+  Long id,
+  String name,
+  double price,
+  List<String> images
+) {
 }

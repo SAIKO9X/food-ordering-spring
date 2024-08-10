@@ -22,9 +22,6 @@ public class JWTProvider {
   @Value("${security.token.secret}")
   private String secretKey;
 
-  @Value("${security.token.expiration}")
-  private long expirationTime;
-
   public Claims validateToken(String token) {
     if (token.startsWith("Bearer ")) {
       token = token.substring(7);
@@ -39,9 +36,6 @@ public class JWTProvider {
         .parseSignedClaims(token)
         .getPayload();
     } catch (JwtException e) {
-      if (e instanceof ExpiredJwtException) {
-        throw new JwtException("Token expired");
-      }
       throw new JwtException("Invalid token");
     }
   }
@@ -55,7 +49,6 @@ public class JWTProvider {
 
     return Jwts.builder()
       .issuedAt(new Date())
-      .expiration(new Date(System.currentTimeMillis() + expirationTime))
       .claim("email", auth.getName())
       .claim("authorities", roles)
       .signWith(key)

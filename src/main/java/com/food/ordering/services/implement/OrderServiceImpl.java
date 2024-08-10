@@ -39,14 +39,10 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public Order createOrder(OrderRequest request, User user) throws Exception {
-    Address shippedAddress = request.deliveryAddress();
-
-    if (shippedAddress == null) {
-      throw new IllegalArgumentException("Delivery address must not be null");
-    }
-
-    Address savedAddress = addressRepository.save(shippedAddress);
-
+    Address savedAddress = user.getAddresses().stream()
+      .filter(address -> address.equals(request.deliveryAddress()))
+      .findFirst()
+      .orElseGet(() -> addressRepository.save(request.deliveryAddress()));
 
     if (!user.getAddresses().contains(savedAddress)) {
       user.getAddresses().add(savedAddress);

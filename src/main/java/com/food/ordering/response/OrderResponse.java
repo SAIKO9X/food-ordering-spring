@@ -28,7 +28,7 @@ public record OrderResponse(
       order.getItems().stream()
         .map(item -> new OrderItemResponse(
           item.getId(),
-          new FoodResponse(item.getFood().getId(), item.getFood().getName()),
+          new FoodResponse(item.getFood().getId(), item.getFood().getName(), item.getFood().getPrice(), item.getFood().getImages()),
           item.getTotalPrice(),
           item.getQuantity(),
           item.getIngredients()
